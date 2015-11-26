@@ -16,6 +16,7 @@
   custom_fields = local_assigns.fetch :custom_fields, nil
   billing_address = local_assigns.fetch :billing_address, false
   shipping_address = local_assigns.fetch :shipping_address, false
+  locale = local_assigns.fetch :locale, nil
   form_url = local_assigns.fetch :form_url, payola.subscribe_path(plan_class: plan_class, plan_id: plan_id)
 
   sale = Payola::Subscription.new(plan: plan)
@@ -57,6 +58,7 @@
   }
 
   raw_data[:signed_custom_fields] = sale.verifier.generate(custom_fields) if custom_fields
+  raw_data[:locale] = locale if locale
 
   html_hash = {}
   raw_data.each do |k,v|
